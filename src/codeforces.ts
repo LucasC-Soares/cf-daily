@@ -4,7 +4,7 @@ import { pickRandom } from './utils';
 
 const CF_API_BASE = 'https://codeforces.com/api';
 
-const EXCLUDED_TAGS = ['*special problem'];
+const EXCLUDED_TAGS = ['*special'];
 
 export async function fetchProblems(): Promise<Problem[]> {
   const { data } = await axios.get(`${CF_API_BASE}/problemset.problems`);
