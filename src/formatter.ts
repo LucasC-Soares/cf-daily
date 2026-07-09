@@ -10,7 +10,10 @@ const CONTEST_LABELS: Record<string, { emoji: string; label: string }> = {
 export function formatDailyMessage(data: MessageData): string {
   const lines: string[] = [];
 
-  lines.push(`📅 Problemas do dia — ${formatDate(data.date)}`);
+  lines.push(`📅 Challenge do dia — ${formatDate(data.date)}`);
+  lines.push('');
+
+  lines.push('Para o dia de hoje, selecionamos os seguintes problemas para vocês praticarem, em ordem de dificuldade de acordo com seu rating:');
   lines.push('');
 
   for (const { range, problem } of data.problems) {
@@ -20,14 +23,34 @@ export function formatDailyMessage(data: MessageData): string {
     lines.push('');
   }
 
+  lines.push('Além disso, temos os seguintes contests de Div2 e Div3 para hoje. ');
+  lines.push('Praticar contest virtualmente é uma ótima forma de se preparar para os contests feitos ao vivo, recomendamos muito realizá-los caso você queria subir de rating e aprender a manusear o seu tempo:');
+  lines.push('');
+  
   for (const { category, contest } of data.contests) {
     const { emoji, label } = CONTEST_LABELS[category];
-    const url = category === 'gym' ? buildGymUrl(contest.id) : buildContestUrl(contest.id);
+    if(category === 'gym') continue;
+    const url = buildContestUrl(contest.id);
 
     lines.push(`${emoji} ${label}`);
     lines.push(contest.name);
     lines.push(url);
     lines.push('');
+  }
+
+  lines.push('E para quem gosta de desafios, temos também um contest de Gym');
+  lines.push('Eles são ótimos para treinar problemas de nível mais avançado, e também são excelentes para treinar com a sua equipe para a ICPC. Muitos deles são de regionais passadas dos mais diversos países, que são muito parecidos com os problemas que você vai encontrar na Maratona');
+  lines.push('');
+
+  for (const { category, contest } of data.contests) {
+    const { emoji, label } = CONTEST_LABELS[category];
+    if(category === 'gym') {
+      const url = buildGymUrl(contest.id);
+      lines.push(`${emoji} ${label}`);
+      lines.push(contest.name);
+      lines.push(url);
+      lines.push('');
+    }
   }
 
   return lines.join('\n').trim();
