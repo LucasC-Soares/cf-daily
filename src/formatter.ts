@@ -7,8 +7,13 @@ const CONTEST_LABELS: Record<string, { emoji: string; label: string }> = {
   gym: { emoji: '💪', label: 'Gym' },
 };
 
-export function formatDailyMessage(data: MessageData): string {
+export function formatDailyMessage(data: MessageData, mentionRoleId?: string): string {
   const lines: string[] = [];
+
+  if (mentionRoleId) {
+    lines.push(`<@&${mentionRoleId}>`);
+    lines.push('');
+  }
 
   lines.push(`📅 Challenge do dia — ${formatDate(data.date)}`);
   lines.push('');
@@ -39,7 +44,7 @@ export function formatDailyMessage(data: MessageData): string {
   }
 
   lines.push('E para quem gosta de desafios, temos também um contest de Gym');
-  lines.push('Eles são ótimos para treinar problemas de nível mais avançado, e também são excelentes para treinar com a sua equipe para a ICPC. Muitos deles são de regionais passadas dos mais diversos países, que são muito parecidos com os problemas que você vai encontrar na Maratona');
+  lines.push('Eles são ótimos para treinar problemas de nível mais avançado, e também são excelentes para treinar com a sua equipe para a ICPC. Muitos deles são de regionais passadas dos mais diversos países, sendo muito parecidos com os problemas que você vai encontrar na Maratona');
   lines.push('');
 
   for (const { category, contest } of data.contests) {

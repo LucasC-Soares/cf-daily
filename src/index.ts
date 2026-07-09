@@ -18,7 +18,7 @@ async function main() {
   );
 
   const data = buildDailyMessageData(problems, regularContests, gymContests);
-  const message = formatDailyMessage(data);
+  const message = formatDailyMessage(data, config.roleId);
 
   console.log('[index] Enviando mensagem para o Discord (webhook)...');
   await sendMessageToWebhook(config.webhookUrl, message);
