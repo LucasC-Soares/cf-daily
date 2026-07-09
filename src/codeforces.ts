@@ -6,6 +6,9 @@ const CF_API_BASE = 'https://codeforces.com/api';
 
 const EXCLUDED_TAGS = ['*special'];
 
+const FOREIGN_TITLE_REGEX =
+  /[\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F]/;
+
 export async function fetchProblems(): Promise<Problem[]> {
   const { data } = await axios.get(`${CF_API_BASE}/problemset.problems`);
 
@@ -47,7 +50,9 @@ export async function fetchContests(gym: boolean = false): Promise<Contest[]> {
 }
 
 export async function fetchGymContests(): Promise<Contest[]> {
-  return fetchContests(true);
+  const gyms = await fetchContests(true);
+
+  return gyms.filter((contest) => !FOREIGN_TITLE_REGEX.test(contest.name));
 }
 
 export function filterProblemsByRating(
