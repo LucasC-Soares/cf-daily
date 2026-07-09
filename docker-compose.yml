@@ -1,0 +1,7 @@
+services:
+  bot:
+    build: .
+    env_file:
+      - .env
+    # Sem restart policy: o container roda uma vez, envia a mensagem e termina.
+    # Útil pra testar localmente com: docker compose run --rm bot

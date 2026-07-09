@@ -1,0 +1,32 @@
+name: Envio diário de problemas do Codeforces
+
+on:
+  schedule:
+    # 11:00 UTC = 08:00 no horário de Brasília
+    - cron: '0 11 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  send-daily-message:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Compilar TypeScript
+        run: npm run build
+
+      - name: Enviar mensagem diária
+        run: node dist/index.js
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
