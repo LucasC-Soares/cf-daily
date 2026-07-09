@@ -1,10 +1,6 @@
 name: Envio diário de problemas do Codeforces
 
 on:
-  push:
-    branches:
-      - main
-
   schedule:
     # 10:00 UTC = 07:00 no horário de Brasília
     - cron: '0 10 * * *'
