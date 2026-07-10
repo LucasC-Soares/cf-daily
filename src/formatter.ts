@@ -66,6 +66,6 @@ export function buildDailyEmbed(message: string): DiscordEmbed {
   return {
     title: '📅 Challenge do dia',
     description: message,
-    color: 0x5865f2,
+    color: 0xB8860B,
   };
 }
