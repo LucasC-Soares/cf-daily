@@ -12,11 +12,13 @@ export async function sendMessageToWebhook(
   embed: DiscordEmbed
 ): Promise<void> {
   await axios.post(webhookUrl, {
-    content: `<@&${config.roleId}>`,
+    content: config.roleId ? `<@&${config.roleId}>` : undefined,
     embeds: [embed],
     allowed_mentions: {
       parse: [],
-      roles: [config.roleId],
+      ...(config.roleId && {
+        roles: [config.roleId],
+      }),
     },
   });
 }
