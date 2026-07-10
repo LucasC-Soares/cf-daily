@@ -12,5 +12,5 @@ function required(name: string): string {
 
 export const config = {
   webhookUrl: required('DISCORD_WEBHOOK_URL'),
-  roleId: process.env.ROLE_ID,
+  roleId: required('ROLE_ID'),
 };

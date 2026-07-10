@@ -9,23 +9,14 @@ import { DiscordEmbed } from './types';
  */
 export async function sendMessageToWebhook(
   webhookUrl: string,
-  content: string | DiscordEmbed
+  embed: DiscordEmbed
 ): Promise<void> {
   await axios.post(webhookUrl, {
-    ...(typeof content === 'string'
-      ? { content }
-      : {
-          content: config.roleId ? `<@&${config.roleId}>` : undefined,
-          embeds: [content],
-        }),
-
-    allowed_mentions: config.roleId
-      ? {
-          parse: [],
-          roles: [config.roleId],
-        }
-      : {
-          parse: [],
-        },
+    content: `<@&${config.roleId}>`,
+    embeds: [embed],
+    allowed_mentions: {
+      parse: [],
+      roles: [config.roleId],
+    },
   });
 }

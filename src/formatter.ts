@@ -8,13 +8,8 @@ const CONTEST_LABELS: Record<string, { emoji: string; label: string }> = {
   gym: { emoji: '💪', label: 'Gym' },
 };
 
-export function formatDailyMessage(data: MessageData, mentionRoleId?: string): string {
+export function formatDailyMessage(data: MessageData): string {
   const lines: string[] = [];
-
-  if (mentionRoleId) {
-    lines.push(`<@&${mentionRoleId}>`);
-    lines.push('');
-  }
 
   lines.push(`📅 Challenge do dia — ${formatDate(data.date)}`);
   lines.push('');
