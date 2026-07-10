@@ -1,7 +1,7 @@
 import { config } from './config';
 import { fetchProblems, fetchContests, fetchGymContests } from './codeforces';
 import { buildDailyMessageData } from './selection';
-import { formatDailyMessage } from './formatter';
+import { formatDailyMessage, buildDailyEmbed } from './formatter';
 import { sendMessageToWebhook } from './webhook';
 
 async function main() {
@@ -19,9 +19,10 @@ async function main() {
 
   const data = buildDailyMessageData(problems, regularContests, gymContests);
   const message = formatDailyMessage(data, config.roleId);
+  const embed = buildDailyEmbed(message);
 
   console.log('[index] Enviando mensagem para o Discord (webhook)...');
-  await sendMessageToWebhook(config.webhookUrl, message);
+  await sendMessageToWebhook(config.webhookUrl, embed);
 
   console.log('[index] Mensagem enviada com sucesso.');
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { config } from './config';
+import { APIEmbed } from 'discord.js';
 
 /**
  * Envia uma mensagem para um canal do Discord via Webhook.
@@ -8,7 +9,7 @@ import { config } from './config';
  */
 export async function sendMessageToWebhook(
   webhookUrl: string,
-  content: string
+  content: APIEmbed | string
 ): Promise<void> {
   await axios.post(webhookUrl, {
     content,
