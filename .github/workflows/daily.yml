@@ -30,3 +30,4 @@ jobs:
         run: node dist/index.js
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ROLE_ID: ${{ secrets.ROLE_ID }}
