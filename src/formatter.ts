@@ -1,6 +1,6 @@
 import { MessageData } from './types';
 import { buildProblemUrl, buildContestUrl, buildGymUrl, formatDate } from './utils';
-import { APIEmbed } from 'discord.js';
+import { DiscordEmbed } from './types';
 
 const CONTEST_LABELS: Record<string, { emoji: string; label: string }> = {
   div2: { emoji: '🏆', label: 'Div2' },
@@ -62,7 +62,7 @@ export function formatDailyMessage(data: MessageData, mentionRoleId?: string): s
   return lines.join('\n').trim();
 }
 
-export function buildDailyEmbed(message: string): APIEmbed {
+export function buildDailyEmbed(message: string): DiscordEmbed {
   return {
     title: '📅 Challenge do dia',
     description: message,

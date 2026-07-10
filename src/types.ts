@@ -38,3 +38,32 @@ export interface MessageData {
   problems: SelectedProblem[];
   contests: SelectedContest[];
 }
+
+export interface DiscordEmbedField {
+  name: string;
+  value: string;
+  inline?: boolean;
+}
+
+export interface DiscordEmbedFooter {
+  text: string;
+}
+
+export interface DiscordEmbedAuthor {
+  name: string;
+  url?: string;
+  icon_url?: string;
+}
+
+export interface DiscordEmbed {
+  title?: string;
+  description?: string;
+  color?: number;
+  url?: string;
+  timestamp?: string;
+
+  author?: DiscordEmbedAuthor;
+  footer?: DiscordEmbedFooter;
+
+  fields?: DiscordEmbedField[];
+}

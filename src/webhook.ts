@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from './config';
-import { APIEmbed } from 'discord.js';
+import { DiscordEmbed } from './types';
 
 /**
  * Envia uma mensagem para um canal do Discord via Webhook.
@@ -9,10 +9,16 @@ import { APIEmbed } from 'discord.js';
  */
 export async function sendMessageToWebhook(
   webhookUrl: string,
-  content: APIEmbed | string
+  content: string | DiscordEmbed
 ): Promise<void> {
   await axios.post(webhookUrl, {
-    content,
+    ...(typeof content === 'string'
+      ? { content }
+      : {
+          content: config.roleId ? `<@&${config.roleId}>` : undefined,
+          embeds: [content],
+        }),
+
     allowed_mentions: config.roleId
       ? {
           parse: [],
