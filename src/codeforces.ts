@@ -44,15 +44,40 @@ export async function fetchContests(gym: boolean = false): Promise<Contest[]> {
     phase: c.phase,
     startTimeSeconds: c.startTimeSeconds,
     type: c.type,
+
+    difficulty: c.difficulty,
+    kind: c.kind,
+    icpcRegion: c.icpcRegion,
+    season: c.season,
   }));
 
   return contests;
+}
+// Pega apenas os contests de dificuldade 3 ou maior, que são no formato ICPC. Isso não quer dizer que são oficiais, apenas que são de dificuldade 3 ou maior e no formato ICPC.
+function filterICPCGyms(contests: Contest[]): Contest[] {
+  return contests.filter(
+    (contest) =>
+      contest.type === 'ICPC' &&
+      (contest.difficulty ?? 0) >= 3
+  );
+}
+// Pega apenas os contests oficiais do ICPC, que são de dificuldade 3 ou maior.
+function filterOfficialICPCContests(
+  contests: Contest[]
+): Contest[] {
+  return contests.filter(
+    (contest) =>
+      contest.kind === 'Official ICPC Contest' &&
+      (contest.difficulty ?? 0) >= 3
+  );
 }
 
 export async function fetchGymContests(): Promise<Contest[]> {
   const gyms = await fetchContests(true);
 
-  return gyms.filter((contest) => !FOREIGN_TITLE_REGEX.test(contest.name));
+  return filterICPCGyms(
+    gyms.filter((contest) => !FOREIGN_TITLE_REGEX.test(contest.name))
+  );
 }
 
 export function filterProblemsByRating(

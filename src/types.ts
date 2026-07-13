@@ -11,7 +11,12 @@ export interface Contest {
   name: string;
   phase: string;
   startTimeSeconds?: number;
-  type: string;
+  type: 'CF' | 'IOI' | 'ICPC';
+
+  difficulty?: number;
+  kind?: string;
+  icpcRegion?: string;
+  season?: string;
 }
 
 export type ContestCategory = 'div2' | 'div3' | 'gym';
