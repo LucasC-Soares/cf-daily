@@ -11,9 +11,6 @@ const CONTEST_LABELS: Record<string, { emoji: string; label: string }> = {
 export function formatDailyMessage(data: MessageData): string {
   const lines: string[] = [];
 
-  lines.push(`📅 Challenge do dia — ${formatDate(data.date)}`);
-  lines.push('');
-
   lines.push('Para o dia de hoje, selecionamos os seguintes problemas para vocês praticarem, em ordem de dificuldade de acordo com seu rating:');
   lines.push('');
 
@@ -58,8 +55,9 @@ export function formatDailyMessage(data: MessageData): string {
 }
 
 export function buildDailyEmbed(message: string): DiscordEmbed {
+  const data = new Date();
   return {
-    title: '📅 Challenge do dia',
+    title: `📅 Challenge do dia — ${formatDate(data)}`,
     description: message,
     color: 0xB8860B,
   };
